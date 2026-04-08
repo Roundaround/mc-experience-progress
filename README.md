@@ -1,4 +1,4 @@
-![Experience Progress](https://imgur.com/OCLoYUN.png)
+![Experience Progress](https://storage.googleapis.com/rnda-mod-banners/experienceprogress-title-round.png)
 
 ![](https://img.shields.io/badge/Loader-Fabric-313e51?style=for-the-badge)
 ![](https://img.shields.io/badge/MC-26.1--26.1.1%20|%201.21%20|%201.20%20|%201.19-313e51?style=for-the-badge)
