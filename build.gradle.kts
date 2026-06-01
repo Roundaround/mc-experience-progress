@@ -10,6 +10,7 @@ allay {
   homepage.set("https://modrinth.com/mod/experience-progress")
   repository.set("https://github.com/Roundaround/mc-fabric-experience-progress")
   issues.set("https://github.com/Roundaround/mc-fabric-experience-progress/issues")
+  logoFile.set("assets/experienceprogress/banner.png")
 
   modrinth {
     projectId.set("experience-progress")
