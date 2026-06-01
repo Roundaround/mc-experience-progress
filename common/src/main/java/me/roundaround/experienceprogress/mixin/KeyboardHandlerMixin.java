@@ -1,6 +1,7 @@
 package me.roundaround.experienceprogress.mixin;
 
-import me.roundaround.experienceprogress.ExperienceProgressMod;
+import me.roundaround.allay.api.MixinEnv;
+import me.roundaround.experienceprogress.client.ExperienceProgressClient;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.input.KeyEvent;
@@ -13,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(KeyboardHandler.class)
+@MixinEnv(MixinEnv.Env.CLIENT)
 public abstract class KeyboardHandlerMixin {
   @Shadow
   @Final
@@ -23,8 +25,8 @@ public abstract class KeyboardHandlerMixin {
 
   @Inject(method = "handleDebugKeys", at = @At(value = "TAIL"), cancellable = true)
   private void processExperienceProgressF3(KeyEvent input, CallbackInfoReturnable<Boolean> info) {
-    if (ExperienceProgressMod.toggleKeyBinding.matches(input)) {
-      boolean state = this.minecraft.debugEntries.toggleStatus(ExperienceProgressMod.DEBUG_HUD_ENTRY_IDENTIFIER);
+    if (ExperienceProgressClient.toggleKeyBinding.matches(input)) {
+      boolean state = this.minecraft.debugEntries.toggleStatus(ExperienceProgressClient.DEBUG_HUD_ENTRY_IDENTIFIER);
       this.debugFeedbackComponent(Component.translatable(state ? "experienceprogress.on" : "experienceprogress.off"));
       info.setReturnValue(true);
     }

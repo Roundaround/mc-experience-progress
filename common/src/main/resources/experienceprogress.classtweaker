@@ -1,0 +1,10 @@
+classTweaker v1 official
+
+# DebugScreenEntries.register(Identifier, DebugScreenEntry) is private in
+# MC 26.1+ mojmaps. The legacy Loom build resolved the game jar with this
+# method accessible, so the original Fabric code could call it directly to
+# register this mod's custom debug-HUD visibility entry. Allay does not
+# auto-widen vanilla members, so the access must be declared explicitly —
+# Fabric copies this through and patches fabric.mod.json's accessWidener
+# field; NeoForge/Forge translate it to META-INF/accesstransformer.cfg.
+accessible method net/minecraft/client/gui/components/debug/DebugScreenEntries register (Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/gui/components/debug/DebugScreenEntry;)Lnet/minecraft/resources/Identifier;

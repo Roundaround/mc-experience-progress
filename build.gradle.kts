@@ -1,3 +1,26 @@
 plugins {
-  id("roundalib-gradle") version "2.0.0"
+  id("me.roundaround.allay")
+}
+
+allay {
+  displayName.set("Experience Progress")
+  description.set("Show current experience level and amount needed to level up as numbers over the XP bar.")
+  authors.set(listOf("Roundaround"))
+  license.set("MIT")
+  homepage.set("https://modrinth.com/mod/experience-progress")
+  repository.set("https://github.com/Roundaround/mc-fabric-experience-progress")
+  issues.set("https://github.com/Roundaround/mc-fabric-experience-progress/issues")
+
+  modrinth {
+    projectId.set("experience-progress")
+  }
+
+  curseforge {
+    projectId.set(1502612)
+  }
+
+  release {
+    versionType.set("release")
+    sourcesJar.set(true)
+  }
 }
