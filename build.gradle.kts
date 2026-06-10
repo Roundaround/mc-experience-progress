@@ -8,8 +8,8 @@ allay {
   authors.set(listOf("Roundaround"))
   license.set("MIT")
   homepage.set("https://modrinth.com/mod/experience-progress")
-  repository.set("https://github.com/Roundaround/mc-fabric-experience-progress")
-  issues.set("https://github.com/Roundaround/mc-fabric-experience-progress/issues")
+  repository.set("https://github.com/Roundaround/mc-experience-progress")
+  issues.set("https://github.com/Roundaround/mc-experience-progress/issues")
   logoFile.set("assets/experienceprogress/banner.png")
 
   modrinth {

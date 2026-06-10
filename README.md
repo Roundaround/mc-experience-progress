@@ -6,7 +6,7 @@
 
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/experience-progress?style=flat&logo=modrinth&color=00AF5C)](https://modrinth.com/mod/experience-progress)
 [![CurseForge Downloads](https://img.shields.io/curseforge/dt/1502612?style=flat&logo=curseforge&color=F16436)](https://www.curseforge.com/minecraft/mc-mods/experience-progress)
-[![GitHub Repo stars](https://img.shields.io/github/stars/Roundaround/mc-fabric-experience-progress?style=flat&logo=github)](https://github.com/Roundaround/mc-fabric-experience-progress)
+[![GitHub Repo stars](https://img.shields.io/github/stars/Roundaround/mc-experience-progress?style=flat&logo=github)](https://github.com/Roundaround/mc-experience-progress)
 
 [![Support me on Ko-fi](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/donate/kofi-singular-alt_vector.svg)](https://ko-fi.com/roundaround)
 
