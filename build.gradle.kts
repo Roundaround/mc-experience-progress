@@ -12,6 +12,12 @@ allay {
   issues.set("https://github.com/Roundaround/mc-experience-progress/issues")
   logoFile.set("assets/experienceprogress/banner.png")
 
+  gametest {
+    // Acknowledge the Minecraft EULA for the throwaway worlds the headless
+    // server game test spins up.
+    eula.set(true)
+  }
+
   modrinth {
     projectId.set("experience-progress")
   }

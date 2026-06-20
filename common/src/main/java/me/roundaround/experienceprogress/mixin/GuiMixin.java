@@ -9,9 +9,9 @@ import me.roundaround.experienceprogress.client.ExperienceProgressClient;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.contextualbar.ContextualBarRenderer;
+import net.minecraft.client.gui.Hud;
+import net.minecraft.client.gui.contextualbar.ContextualBar;
 import net.minecraft.util.CommonColors;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Gui.class)
+@Mixin(Hud.class)
 @MixinEnv(MixinEnv.Env.CLIENT)
 public abstract class GuiMixin {
   @Shadow
@@ -31,16 +31,16 @@ public abstract class GuiMixin {
   @WrapOperation(
       method = "extractHotbarAndDecorations", at = @At(
       value = "INVOKE",
-      target = "Lnet/minecraft/client/gui/contextualbar/ContextualBarRenderer;extractBackground" +
+      target = "Lnet/minecraft/client/gui/contextualbar/ContextualBar;extractBackground" +
                "(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V"
   )
   )
   private void wrapRenderBar(
-      ContextualBarRenderer instance,
+      ContextualBar instance,
       GuiGraphicsExtractor context,
       DeltaTracker renderTickCounter,
       Operation<Void> original,
-      @Share("bar") LocalRef<ContextualBarRenderer> barRef
+      @Share("bar") LocalRef<ContextualBar> barRef
   ) {
     barRef.set(instance);
     original.call(instance, context, renderTickCounter);
@@ -49,7 +49,7 @@ public abstract class GuiMixin {
   @Inject(
       method = "extractHotbarAndDecorations", at = @At(
       value = "INVOKE",
-      target = "Lnet/minecraft/client/gui/contextualbar/ContextualBarRenderer;extractExperienceLevel" +
+      target = "Lnet/minecraft/client/gui/contextualbar/ContextualBar;extractExperienceLevel" +
                "(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Font;I)V"
   )
   )
@@ -57,7 +57,7 @@ public abstract class GuiMixin {
       GuiGraphicsExtractor context,
       DeltaTracker tickCounter,
       CallbackInfo ci,
-      @Share("bar") LocalRef<ContextualBarRenderer> barRef
+      @Share("bar") LocalRef<ContextualBar> barRef
   ) {
     if (!this.minecraft.debugEntries.isCurrentlyEnabled(ExperienceProgressClient.DEBUG_HUD_ENTRY_IDENTIFIER) ||
         this.minecraft.player == null) {
@@ -68,7 +68,7 @@ public abstract class GuiMixin {
     float currentProgress = this.minecraft.player.experienceProgress;
     int currentExperience = (int) (currentProgress * experienceNeeded);
 
-    ContextualBarRenderer bar = barRef.get();
+    ContextualBar bar = barRef.get();
     int x = bar.left(this.minecraft.getWindow());
     int y = bar.top(this.minecraft.getWindow());
 
