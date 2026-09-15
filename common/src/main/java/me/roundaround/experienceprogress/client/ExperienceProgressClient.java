@@ -7,7 +7,6 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.components.debug.DebugEntryNoop;
 import net.minecraft.client.gui.components.debug.DebugScreenEntries;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 public final class ExperienceProgressClient {
   public static final Identifier DEBUG_HUD_ENTRY_IDENTIFIER = Identifier.fromNamespaceAndPath(
@@ -24,8 +23,8 @@ public final class ExperienceProgressClient {
 
     toggleKeyBinding = KeyBindings.register(new KeyMapping(
         "experienceprogress.keybind.toggle",
-        InputConstants.Type.KEYSYM,
-        GLFW.GLFW_KEY_X,
+        InputConstants.Type.KEYBOARD,
+        InputConstants.KEY_X,
         KeyMapping.Category.DEBUG
     ));
   }
