@@ -16,7 +16,9 @@ import me.roundaround.trove.gametest.ClientWorld;
 public class ExperienceProgressHudClientTest implements ClientTest {
   @Override
   public void runTest(ClientTestContext context) {
-    try (ClientWorld world = context.worldBuilder().creative().stopTime(true).create()) {
+    // Survival, not creative: MultiPlayerGameMode.hasExperience() is false in creative,
+    // which skips the contextual bar entirely and never reaches the injected draw.
+    try (ClientWorld world = context.worldBuilder().survival().stopTime(true).create()) {
       world.teleport(0.5, 65.0, 0.5);
 
       context.runOnClient((mc) -> {
@@ -26,6 +28,7 @@ public class ExperienceProgressHudClientTest implements ClientTest {
       });
 
       world.runCommand("xp add @s 30 points");
+      context.waitFor((mc) -> mc.player != null && mc.player.experienceLevel > 0);
       context.waitTicks(10);
     }
   }
