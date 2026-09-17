@@ -1,9 +1,6 @@
 package me.roundaround.experienceprogress.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
+import com.mojang.datafixers.util.Pair;
 import me.roundaround.allay.api.MixinEnv;
 import me.roundaround.experienceprogress.client.ExperienceProgressClient;
 import net.minecraft.client.DeltaTracker;
@@ -28,37 +25,19 @@ public abstract class GuiMixin {
   @Final
   private Minecraft minecraft;
 
-  @WrapOperation(
-      method = "extractHotbarAndDecorations", at = @At(
-      value = "INVOKE",
-      target = "Lnet/minecraft/client/gui/contextualbar/ContextualBar;extractBackground" +
-               "(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V"
-  )
-  )
-  private void wrapRenderBar(
-      ContextualBar instance,
-      GuiGraphicsExtractor context,
-      DeltaTracker renderTickCounter,
-      Operation<Void> original,
-      @Share("bar") LocalRef<ContextualBar> barRef
-  ) {
-    barRef.set(instance);
-    original.call(instance, context, renderTickCounter);
-  }
+  @Shadow
+  private Pair<?, ContextualBar> contextualInfoBar;
 
+  // NeoForge/Forge split extractHotbarAndDecorations into one method per GuiLayer; the
+  // ContextualBar.extractExperienceLevel call site lives in extractExperienceLevel there.
   @Inject(
-      method = "extractHotbarAndDecorations", at = @At(
+      method = {"extractHotbarAndDecorations", "extractExperienceLevel"}, at = @At(
       value = "INVOKE",
       target = "Lnet/minecraft/client/gui/contextualbar/ContextualBar;extractExperienceLevel" +
                "(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Font;I)V"
   )
   )
-  private void onDrawExperienceLevel(
-      GuiGraphicsExtractor context,
-      DeltaTracker tickCounter,
-      CallbackInfo ci,
-      @Share("bar") LocalRef<ContextualBar> barRef
-  ) {
+  private void onDrawExperienceLevel(GuiGraphicsExtractor context, DeltaTracker tickCounter, CallbackInfo ci) {
     if (!this.minecraft.debugEntries.isCurrentlyEnabled(ExperienceProgressClient.DEBUG_HUD_ENTRY_IDENTIFIER) ||
         this.minecraft.player == null) {
       return;
@@ -68,7 +47,7 @@ public abstract class GuiMixin {
     float currentProgress = this.minecraft.player.experienceProgress;
     int currentExperience = (int) (currentProgress * experienceNeeded);
 
-    ContextualBar bar = barRef.get();
+    ContextualBar bar = this.contextualInfoBar.getSecond();
     int x = bar.left(this.minecraft.getWindow());
     int y = bar.top(this.minecraft.getWindow());
 
